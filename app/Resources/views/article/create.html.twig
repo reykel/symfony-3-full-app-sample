@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agregar registro{% endblock %}
+{% block body %}
+    <h2 class="well">Agregar registro</h2>
+    <div id="containerPosts"></div>
+    <br>
+    <div class="form-horizontal well">
+        {{form_start(form)}}
+            <div>
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+                {{ form_errors(form.name) }}
+            </div>
+            <div>
+                {{ form_label(form.date_published) }}
+                {{ form_widget(form.date_published) }}
+                {{ form_errors(form.date_published) }}
+            </div>
+            <div>
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+                {{ form_errors(form.description) }}
+            </div>
+            <div>
+                {{ form_label(form.blog) }}
+                {{ form_widget(form.blog) }}
+                {{ form_errors(form.blog) }}
+            </div>
+            <div align="center">
+                <button type="submit" class="btn btn-info btn-large"><i class="glyphicon glyphicon-ok icon-white"></i> Aceptar</button>    
+                <a class="btn btn-danger btn-large" href="/app_dev.php/article/index"><i class="glyphicon glyphicon-remove icon-white"></i> Cancelar</a>
+            </div>
+        {{form_end(form)}}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function($){
+            $("#form_date_published").datepicker({
+                language: "es",
+                format:"yyyy-mm-dd",
+                autoclose:true,
+                todayHighlight:true,
+                forceParse: true,
+            });
+        });
+    </script>
+{% endblock %}

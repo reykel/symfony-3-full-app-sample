@@ -1,0 +1,251 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de actividades{% endblock %}
+
+{% block body %}
+<h2 class="well">Listado de actividades</h2>
+<div align="left">
+	<a id="columnas" href="#" title="Mostrar / ocultar columas de datos" data-toggle="tooltip" class="btn btn-setting btn-round btn-warning btn-sm"><i class="glyphicon glyphicon-cog"></i></a>
+	<a id="" href="#" title="Búsqueda avanzada" data-toggle="tooltip" class="btn btn-setting btn-round btn-warning btn-sm"><i class="glyphicon glyphicon-tasks"></i></a>
+	<a href="#" title="Tooltip, you can change the position" data-toggle="tooltip" class="btn btn-setting btn-round btn-warning btn-sm"><i class="glyphicon glyphicon-list-alt"></i></a>
+	<a href="#" title="Tooltip, you can change the position" data-toggle="tooltip" class="btn btn-setting btn-round btn-warning btn-sm"><i class="glyphicon glyphicon-print"></i></a>
+</div>
+
+{% if is_granted('ROLE_ADMIN') %}	
+	<div align="right"><a href="/actividades/create" class="btn btn-info"><i class="glyphicon glyphicon-leaf icon-white"></i> Agregar nuevo</a></div>
+{% endif %}
+	
+<br>
+
+<table id="table_id" class="table table-striped table-condensed responsive" cellspacing="0" width="100%">
+	<thead>
+		<tr>
+			<th>No</th>
+			<th>Título</th>
+			<th>Sinopsis</th>
+			<th>Fecha inicio</th>
+			<th>Fecha fin</th>
+			<th>Departamento</th>
+			<th>Facultad</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for p in model %}
+			<tr>
+				<th scope="Row">{{p.id}}</th>
+				<td><a href="/actividades/detail/{{p.id}}">{{p.titulo}}</a></td>
+				<td>{{p.sinopsis}}</td>
+				<td>{{p.fechaInicio}}</td>
+				<td>{{p.fechaFin}}</td>
+				<td>{{p.departamento.departamento}}</td>
+				<td>{{p.departamento.facultad.facultad}}</td>
+				<td>
+					<div align="right">
+						{% if is_granted('ROLE_ADMIN') %}	
+							<a href="/actividades/edit/{{p.id}}" class="btn btn-success btn-sm", style="margin-bottom:2px"><i class="glyphicon glyphicon-edit icon-white"></i> Modificar</a>
+							<a href="/actividades/delete/{{p.id}}" class="btn btn-danger btn-sm", style="margin-bottom:2px"><i class="glyphicon glyphicon-trash icon-white"></i> Eliminar</a>
+						{% endif %}
+						<a href="/modulos/index/{{p.id}}" class="btn btn-warning btn-sm", style="margin-bottom:2px"><i class="glyphicon glyphicon-th icon-white"></i> Módulos</a>
+
+					</div>
+				</td>			
+			</tr>
+	{% endfor %}
+	</tbody>
+	<tfoot>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			{% if is_granted('ROLE_ADMIN') %}
+				<th></th>
+			{% endif %}
+		</tr>
+	</tfoot>	
+</table>
+
+    <div class="modal fade" id="ColumnsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Columnas de datos</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Click para mostrar / ocultar columnas de datos...</p>
+					<a href="javascript:void(0);" onclick="fnShowHide(0);">No<br></a>
+					<a href="javascript:void(0);" onclick="fnShowHide(1);">Título<br></a>
+					<a href="javascript:void(0);" onclick="fnShowHide(2);">Sinopsis<br></a>
+					<a href="javascript:void(0);" onclick="fnShowHide(3);">Fecha inicio<br></a>
+					<a href="javascript:void(0);" onclick="fnShowHide(4);">Fecha fin<br></a>
+					<a href="javascript:void(0);" onclick="fnShowHide(5);">Departamento<br></a>
+					<a href="javascript:void(0);" onclick="fnShowHide(6);">Facultad<br></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="SearchingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Búsqueda avanzada</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Escriba su criterio de búsqueda en los campos correspondientes...</p>
+                    <table>	
+							<th><input type="text" name="id" value="No" class="search_init" /><br><br></th>
+					</table>
+                    <table>	
+							<th><input type="text" name="titulo" value="Título" class="search_init" /><br><br></th>
+					</table>
+
+                    <table>	
+							<th><input type="text" name="sinopsis" value="Sinopsis" class="search_init" /><br></th>
+					</table>
+
+					<table>
+						<th>
+							<select name="facultad" id="facultades">
+								<option value=" ">Todas las facultades</option>
+								<option value="Construcciones">Construcciones</option>
+								<option value="Química">Química</option>
+							</select>
+						</th><br>
+					</table>
+
+					<table>
+						<th>
+							<select name="departamento" id="departamentos">
+								<option value=" ">Todos los departamentos</option>
+								<option value="Arquitectura">Arquitectura</option>
+								<option value="Ingeniería Civil">Ingeniería Civil</option>
+								<option value="Química industrial">Química industrial</option>
+							</select>
+						</th><br>
+					</table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myOtherOtherModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Búsqueda avanzada</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Escriba su criterio de búsqueda en los campos correspondientes...</p>
+
+					<table input type="text" name="search_engine" value="Título" class="search_init" /><br><br>
+					<table input type="text" name="search_browser" value="Sinopsis" class="search_init" /><br><br>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-info" data-dismiss="modal">Aplicar configuración</a>
+                </div>
+            </div>
+        </div>
+    </div>        
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+    	var asInitVals = new Array();
+
+        $(document).ready(function($){
+	    	var oTable = $('#table_id').dataTable( {
+    	    	"bPaginate": true,
+	        	"bLengthChange": true,
+		        "bFilter": true,
+    		    "bSort": true,
+	        	"bInfo": true,
+		        "bAutoWidth": true,
+    		    "bStateSave": true,
+	        	"bJQueryUI": true,
+		        "colReorder": true,
+		        /*"select": true,*/
+		        "responsive": true,
+    		    "sPaginationType": "simple_numbers",
+		    } );
+
+			$('.btn-danger').click(function(e){
+		        e.preventDefault();
+		        var location = $(this).attr("href");
+		        alertify.confirm("Procederá a eliminar el registro seleccionado, desea continuar?", function(confirm) {
+		            if (!confirm) {
+		                e.preventDefault();
+		            	noty({"text":"Eliminación cancelada","layout":"topCenter","type":"error","animateOpen": {"opacity": "show"}});
+		            }else{
+		            	noty({"text":"Eliminación correctamente efectuada","layout":"topCenter","type":"success","animateOpen": {"opacity": "show"}});
+		            	window.location = location;
+		            }
+		        });
+			});
+
+			$('#columnas').click(function(e) {
+			  e.preventDefault();
+			  $('#ColumnsModal').modal('show');
+			});
+
+			$('#advancedSearch').click(function(e) {
+			  e.preventDefault();
+			  $('#SearchingModal').modal('show');
+			});
+
+		    $("table input").keyup( function () {
+		        oTable.fnFilter( this.value, $("table input").index(this) );
+		    });
+		     
+		    $("table input").each( function (i) {
+		        asInitVals[i] = this.value;
+		    });
+
+		    $("table input").focus( function () {
+		        if (this.className == "search_init" ){
+		            this.className = "";
+		            this.value = "";
+		        }
+		    });
+
+		    $("table input").blur( function (i) {
+		        if ( this.value == "" ){
+		            this.className = "search_init";
+		            this.value = asInitVals[$("table input").index(this)];
+		        }
+		    });
+
+			$("#facultades").click( function () {
+				oTable.fnFilter( this.value, 6 );
+			});
+	     
+			$("#departamentos").click( function () {
+				oTable.fnFilter( this.value, 5 );
+			});
+
+        });
+
+		function fnShowHide( iCol )
+		{
+		    var oTable = $('#table_id').dataTable();
+		     
+		    var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+		    oTable.fnSetColumnVis( iCol, bVis ? false : true );
+		}
+    </script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detalles registro{% endblock %}
+
+{% block body %}
+<h2 class="well"><strong>Detalles:</strong></h2>
+<div align="right"><a class="btn btn-warning" href="/actividades/index" title="Regresar al índice " data-toggle="tooltip"><i class="glyphicon glyphicon-chevron-left icon-white"></i></a></div>
+<br>
+<div class="form-horizontal well">
+<ul class="list-group">
+	<li class="list-group-item"><strong>Título:</strong> {{model.titulo}}</li>
+	<li class="list-group-item"><strong>Departamento:</strong> {{model.departamento.departamento()}}</li>
+	<li class="list-group-item"><strong>Facultad:</strong> {{model.departamento.facultad.facultad()}}</li>
+	<li class="list-group-item"><strong>Organismo:</strong> {{model.organismo.organismo()}}</li>
+	<li class="list-group-item"><strong>Entidad:</strong> {{model.entidad}}</li>
+	<li class="list-group-item"><strong>Fecha inicio:</strong> {{model.FechaInicio}}</li>
+	<li class="list-group-item"><strong>Fecha fin:</strong> {{model.FechaFin}}</li>
+	<li class="list-group-item"><strong>Sinopsis:</strong> {{model.sinopsis}}</li>
+	<li class="list-group-item"><strong>Objetivo:</strong> {{model.objetivo}}</li>
+	<li class="list-group-item"><strong>Forma:</strong> {{model.forma}}</li>
+	<li class="list-group-item"><strong>Objetivo:</strong> {{model.grado}}</li>
+	<li class="list-group-item"><strong>Objetivo:</strong> {{model.modalidad}}</li>
+	<li class="list-group-item"><strong>Dirigido a:</strong> {{model.dirigido}}</li>
+	<li class="list-group-item"><strong>Cantidad:</strong> {{model.cantidad}}</li>
+	<li class="list-group-item"><strong>Calendario:</strong> {{model.calendario}}</li>
+	<li class="list-group-item"><strong>Hora inicio:</strong> {{model.horaInicio}}</li>
+	<li class="list-group-item"><strong>Hora fin:</strong> {{model.horaFin}}</li>
+	<li class="list-group-item"><strong>Total de horas:</strong> {{model.totalHoras}}</li>
+	<li class="list-group-item"><strong>Horas lectivas:</strong> {{model.horasLectivas}}</li>
+	<li class="list-group-item"><strong>Créditos:</strong> {{model.creditos}}</li>
+	<li class="list-group-item"><strong>Matrícula:</strong> {{model.matricula}}</li>
+	<li class="list-group-item"><strong>Período:</strong> {{model.periodo}}</li>
+	<li class="list-group-item"><strong>Lugar:</strong> {{model.lugar}}</li>
+</ul>
+</div>
+{% endblock %}
+{% block stylesheets %}{% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de artículos{% endblock %}
+
+{% block body %}
+<h2 class="well">Listado de artículos</h2>
+<div align="left">
+	<a id="config" href="#" title="Tooltip, you can change the position" data-toggle="tooltip" class="btn btn-setting btn-round btn-warning btn-sm"><i class="glyphicon glyphicon-cog"></i></a>
+	<a href="#" title="Tooltip, you can change the position" data-toggle="tooltip" class="btn btn-setting btn-round btn-warning btn-sm"><i class="glyphicon glyphicon-tasks"></i></a>
+	<a href="#" title="Tooltip, you can change the position" data-toggle="tooltip" class="btn btn-setting btn-round btn-warning btn-sm"><i class="glyphicon glyphicon-print"></i></a>
+	<a href="#" title="Tooltip, you can change the position" data-toggle="tooltip" class="btn btn-setting btn-round btn-warning btn-sm"><i class="glyphicon glyphicon-list-alt"></i></a>
+</div>
+
+{% if is_granted('ROLE_ADMIN') %}
+	<div align="right"><a href="/app_dev.php/article/create" class="btn btn-info"><i class="glyphicon glyphicon-leaf icon-white"></i> Agregar nuevo</a></div>
+{% endif %}
+<br>
+
+<table id="table_id" class="table table-striped table-condensed responsive" cellspacing="0" width="100%">
+	<thead>
+		<tr>
+			<th>No</th>
+			<th>Nombre</th>
+			<th>Fecha publicación</th>
+			<th>Descripción</th>
+			<th>Blog</th>
+			<th>Usuario</th>
+			{% if is_granted('ROLE_ADMIN') %}
+				<th></th>
+			{% endif %}
+		</tr>
+	</thead>
+	<tbody>
+	{% for p in model %}
+		<tr>
+			<th scope="Row">{{p.id}}</th>
+			<td><a href="/app_dev.php/article/detail/{{p.id}}">{{p.name}}</a></td>
+			<td>{{p.datePublished}}</td>
+			<td>{{p.description}}</td>
+			<td>{{p.blog.name}}</td>
+			<td>{{p.blog.user.username}}</td>
+			{% if is_granted('ROLE_ADMIN') %}
+				<td>
+					<div align="right">
+						<a href="/app_dev.php/article/edit/{{p.id}}" class="btn btn-success btn-sm", style="margin-bottom:2px"><i class="glyphicon glyphicon-edit icon-white"></i> Modificar</a>
+						<a href="/app_dev.php/article/delete/{{p.id}}" class="btn btn-danger btn-sm", style="margin-bottom:2px"><i class="glyphicon glyphicon-trash icon-white"></i> Eliminar</a>
+					</div>
+				</td>			
+			{% endif %}
+		</tr>
+	{% endfor %}
+	</tbody>
+	<tfoot>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			{% if is_granted('ROLE_ADMIN') %}
+				<th></th>
+			{% endif %}
+		</tr>
+	</tfoot>	
+</table>
+
+<div><strong>El total es:</strong></div><div id="resultado">0.00</div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Settings</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Here settings can be configured...</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-info" data-dismiss="modal">Aplicar configuración</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function($){
+	    	$('#table_id').dataTable( {
+    	    	"bPaginate": true,
+	        	"bLengthChange": true,
+		        "bFilter": true,
+    		    "bSort": true,
+	        	"bInfo": true,
+		        "bAutoWidth": true,
+    		    "bStateSave": true,
+	        	"bJQueryUI": true,
+		        "colReorder": true,
+		        /*"select": true,*/
+		        "responsive": true,
+    		    "sPaginationType": "simple_numbers",
+		        "fnFooterCallback": function ( nRow, aaData, iStart, iEnd, aiDisplay ) {
+		            var iTotalMarket = 0;
+
+		            for ( var i=0 ; i<aaData.length ; i++ )
+		            {
+		                iTotalMarket += aaData[i][3]*1;
+		            }
+		             
+		            var iPageMarket = 0;
+
+		            for ( var i=iStart ; i<iEnd ; i++ )
+		            {
+		                iPageMarket += aaData[ aiDisplay[i] ][3]*1;
+		            }
+
+            		var nCells = nRow.getElementsByTagName('th');
+            		nCells[3].innerHTML = parseFloat(iPageMarket); 		             
+					$('#resultado').text(parseFloat(iPageMarket) + ' de un total de ' + iTotalMarket);
+		        }
+		    } );
+
+			$('.btn-danger').click(function(e){
+		        e.preventDefault();
+		        var location = $(this).attr("href");
+		        alertify.confirm("Procederá a eliminar el registro seleccionado, desea continuar?", function(confirm) {
+		            if (!confirm) {
+		                e.preventDefault();
+		            	noty({"text":"Eliminación cancelada","layout":"topCenter","type":"error","animateOpen": {"opacity": "show"}});
+		            }else{
+		            	noty({"text":"Eliminación correctamente efectuada","layout":"topCenter","type":"success","animateOpen": {"opacity": "show"}});
+		            	window.location = location;
+		            }
+		        });
+			});
+
+			$('#config').click(function(e) {
+			  e.preventDefault();
+			  $('#myModal').modal('show');
+			});			
+        });
+    </script>
+{% endblock %}

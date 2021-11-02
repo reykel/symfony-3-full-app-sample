@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agregar registro{% endblock %}
+{% block body %}
+    <h2 class="well">Registre sus datos por favor</h2>
+    <div id="containerPosts"></div>
+    <br>
+    <div class="form-horizontal well">
+        {{form_start(form)}}
+            <div>
+                <div class="input-group input-group-lg", style="margin-bottom:15px">
+	                <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
+	                {{ form_widget(form.username) }}
+	                {{ form_errors(form.username) }}
+	        	</div>
+            </div>
+            <div>
+                <div class="input-group input-group-lg", style="margin-bottom:15px">
+	                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope red"></i></span>
+	                {{ form_widget(form.email) }}
+    	            {{ form_errors(form.email) }}
+	            </div>
+            </div>
+            <div>
+                <div class="input-group input-group-lg", style="margin-bottom:15px">
+	                <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker red"></i></span>
+	                {{ form_widget(form.area) }}
+    	            {{ form_errors(form.area) }}
+	            </div>
+            </div>
+            <div>
+                <div class="input-group input-group-lg", style="margin-bottom:15px">
+	                <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
+	                {{ form_widget(form.password.first) }}
+    	            {{ form_errors(form.password.first) }}
+	            </div>
+            </div>
+            <div>
+                <div class="input-group input-group-lg", style="margin-bottom:15px">
+	                <span class="input-group-addon"><i class="glyphicon glyphicon-repeat red"></i></span>
+	                {{ form_widget(form.password.second) }}
+    	            {{ form_errors(form.password.second) }}
+	            </div>            
+            </div>            
+            <div align="center">
+                <button type="submit" class="btn btn-info btn-large"><i class="glyphicon glyphicon-ok icon-white"></i> Registrarse</button>    
+            </div>
+        {{form_end(form)}}
+    </div>
+{% endblock %}

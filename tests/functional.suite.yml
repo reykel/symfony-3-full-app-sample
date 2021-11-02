@@ -1,0 +1,7 @@
+actor: FunctionalTester
+modules:
+   enabled:
+      - Symfony:
+          app_path: 'app'
+          var_path: 'var'
+          environment: 'local'

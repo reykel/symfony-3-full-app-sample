@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar registro{% endblock %}
+
+{% block body %}
+    <h2 class="well">Editar registro</h2>
+    <div id="containerPosts"></div>
+    <br>
+    <div class="form-horizontal well">
+        {{form_start(form)}}
+            <div>
+                {{ form_label(form.titulo) }}
+                {{ form_widget(form.titulo) }}
+                {{ form_errors(form.titulo) }}
+            </div>
+            <div>
+                {{ form_label(form.departamento) }}
+                {{ form_widget(form.departamento) }}
+                {{ form_errors(form.departamento) }}
+            </div>
+            <div>
+                {{ form_label(form.organismo) }}
+                {{ form_widget(form.organismo) }}
+                {{ form_errors(form.organismo) }}
+            </div>
+            <div>
+                {{ form_label(form.entidad) }}
+                {{ form_widget(form.entidad) }}
+                {{ form_errors(form.entidad) }}
+            </div>
+            <div>
+                {{ form_label(form.fechaInicio) }}
+                {{ form_widget(form.fechaInicio) }}
+                {{ form_errors(form.fechaInicio) }}
+            </div>
+            <div>
+                {{ form_label(form.fechaFin) }}
+                {{ form_widget(form.fechaFin) }}
+                {{ form_errors(form.fechaFin) }}
+            </div>
+            <div>
+                {{ form_label(form.sinopsis) }}
+                {{ form_widget(form.sinopsis) }}
+                {{ form_errors(form.sinopsis) }}
+            </div>
+            <div>
+                {{ form_label(form.objetivo) }}
+                {{ form_widget(form.objetivo) }}
+                {{ form_errors(form.objetivo) }}
+            </div>            
+            <div>
+                {{ form_label(form.coordinador) }}
+                {{ form_widget(form.coordinador) }}
+                {{ form_errors(form.coordinador) }}
+            </div>
+            <div>
+                {{ form_label(form.forma) }}
+                {{ form_widget(form.forma) }}
+                {{ form_errors(form.forma) }}
+            </div>            
+            <div>
+                {{ form_label(form.grado) }}
+                {{ form_widget(form.grado) }}
+                {{ form_errors(form.grado) }}
+            </div>
+            <div>
+                {{ form_label(form.modalidad) }}
+                {{ form_widget(form.modalidad) }}
+                {{ form_errors(form.modalidad) }}
+            </div>            
+            <div>
+                {{ form_label(form.dirigido) }}
+                {{ form_widget(form.dirigido) }}
+                {{ form_errors(form.dirigido) }}
+            </div>
+            <div>
+                {{ form_label(form.cantidad) }}
+                {{ form_widget(form.cantidad) }}
+                {{ form_errors(form.cantidad) }}
+            </div>
+            <div>
+                {{ form_label(form.calendario) }}
+                {{ form_widget(form.calendario) }}
+                {{ form_errors(form.calendario) }}
+            </div>
+            <div>
+                {{ form_label(form.horaInicio) }}
+                {{ form_widget(form.horaInicio) }}
+                {{ form_errors(form.horaInicio) }}
+            </div>
+            <div>
+                {{ form_label(form.horaFin) }}
+                {{ form_widget(form.horaFin) }}
+                {{ form_errors(form.horaFin) }}
+            </div>
+            <div>
+                {{ form_label(form.totalHoras) }}
+                {{ form_widget(form.totalHoras) }}
+                {{ form_errors(form.totalHoras) }}
+            </div>
+            <div>
+                {{ form_label(form.horasLectivas) }}
+                {{ form_widget(form.horasLectivas) }}
+                {{ form_errors(form.horasLectivas) }}
+            </div>
+            <div>
+                {{ form_label(form.creditos) }}
+                {{ form_widget(form.creditos) }}
+                {{ form_errors(form.creditos) }}
+            </div>            
+            <div>
+                {{ form_label(form.periodo) }}
+                {{ form_widget(form.periodo) }}
+                {{ form_errors(form.periodo) }}
+            </div>            
+            <div>
+                {{ form_label(form.matricula) }}
+                {{ form_widget(form.matricula) }}
+                {{ form_errors(form.matricula) }}
+            </div>            
+            <div>
+                {{ form_label(form.lugar) }}
+                {{ form_widget(form.lugar) }}
+                {{ form_errors(form.lugar) }}
+            </div>            
+            <div align="center">
+                <button type="submit" class="btn btn-info btn-large"><i class="glyphicon glyphicon-ok icon-white"></i> Aceptar</button>    
+                <a class="btn btn-danger btn-large" href="/actividades/index"><i class="glyphicon glyphicon-remove icon-white"></i> Cancelar</a>
+            </div>
+        {{form_end(form)}}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function($){
+            $("#form_fechaInicio").datepicker({
+                language: "es",
+                format:"yyyy-mm-dd",
+                autoclose:true,
+                todayHighlight:true,
+                forceParse: true,
+            });
+            $("#form_fechaFin").datepicker({
+                language: "es",
+                format:"yyyy-mm-dd",
+                autoclose:true,
+                todayHighlight:true,
+                forceParse: true,
+            });            
+            $("#form_horaInicio").hunterTimePicker();
+            $("#form_horaFin").hunterTimePicker();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,47 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+
+    providers:
+        our_db_provider:
+            entity:
+                class: AppBundle:User
+
+    firewalls:
+        main:
+            anonymous: ~
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                default_target_path: /
+                always_use_default_target_path: false
+                use_referer: true
+                target_path_parameter: redirect_url
+                #failure_path: login_failure
+            logout:
+                path: /logout
+                target: /login
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        #dev:
+            #pattern: ^/(_(profiler|wdt)|css|images|js)/
+            #security: false
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    access_control:
+        # require ROLE_ADMIN for /articles*
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/actividades/edit/, roles: ROLE_ADMIN }
+        - { path: ^/actividades/create/, roles: ROLE_ADMIN }
+        - { path: ^/actividades/delete/, roles: ROLE_ADMIN }
+        - { path: ^/actividades, roles: ROLE_USER }
+        - { path: ^/modulos/edit/, roles: ROLE_ADMIN }
+        - { path: ^/modulos/create/, roles: ROLE_ADMIN }
+        - { path: ^/modulos/delete/, roles: ROLE_ADMIN }
+        - { path: ^/modulos, roles: ROLE_USER }

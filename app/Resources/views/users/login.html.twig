@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{% if error %}
+    <div class="alert alert-danger">Error en nombre de usuario o contraseña. Rectifique sus datos por favor.</div>
+{% endif %}
+<div class="ch-container">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-12 center login-header">
+                <h2>Bienvenido a Diana 1.0</h2>
+            </div>
+        </div>
+    </div>        
+    <div class="row">
+        <div class="well col-lg-4 col-md-4 col-sm-6 col-xs-10 center login-box">
+            <form class="form-horizontal" action="{{ path('login_check') }}" method="post">
+                    <div class="input-group input-group-lg", style="margin-bottom:15px">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
+                        <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}" placeholder="Usuario", style="font-size:14px" />
+                    </div>
+                    <div class="input-group input-group-lg", style="margin-bottom:15px">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
+    					<input type="password" id="password" name="_password" class="form-control" placeholder="Contraseña" , style="font-size:14px"/>
+    		    		<input type="hidden" name="_target_path" value="/" />                        
+                    </div>
+
+                    <div class="center col-lg-4 col-md-4 col-sm-6 col-xs-10 ">
+                        <button type="submit" name="login" class="btn btn-info">Entrar</button>
+                    </div>
+            </form>
+        </div>
+    </div>    
+</div>    
+{% endblock %}

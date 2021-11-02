@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detalles registro{% endblock %}
+
+{% block body %}
+<h2 class="well"><strong>Detalles:</strong> {{model.name}}</h2>
+<div align="right"><a class="btn btn-warning" href="/app_dev.php/article/index" title="Regresar al índice " data-toggle="tooltip"><i class="glyphicon glyphicon-chevron-left icon-white"></i></a></div>
+<br>
+<div class="form-horizontal well">
+<ul class="list-group">
+	<li class="list-group-item"><strong>Fecha publicación:</strong> {{model.datePublished}}</li>
+	<li class="list-group-item"><strong>Descripción:</strong> {{model.description}}</li>
+	<li class="list-group-item"><strong>Categoría:</strong> {{model.blog.name()}}</li>
+	<li class="list-group-item"><strong>Usuario:</strong> {{model.blog.user.username()}}</li>
+	<li class="list-group-item"><strong>Area:</strong> {{model.blog.user.area()}}</li>
+</ul>
+</div>
+{% endblock %}
+{% block stylesheets %}{% endblock %}

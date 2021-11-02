@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de Blogs{% endblock %}
+
+{% block body %}
+<h2 class="well">Listado de Blogs</h2>
+
+{% if is_granted('ROLE_ADMIN') %}
+	<div align="right"><a href="/app_dev.php/blog/create" class="btn btn-info"><i class="glyphicon glyphicon-leaf icon-white"></i> Agregar nuevo</a></div>
+{% endif %}
+<br>
+
+<table id="table_id" class="table table-striped table-condensed responsive" cellspacing="0" width="100%">
+	<thead>
+		<tr>
+			<th>No</th>
+			<th>Nombre</th>
+			<th>Usuario</th>
+			{% if is_granted('ROLE_ADMIN') %}
+				<th></th>
+			{% endif %}
+		</tr>
+	</thead>
+	<tbody>
+	{% for p in model %}
+		<tr>
+			<th scope="Row">{{p.id}}</th>
+			<td>{{p.name}}</td>
+			<td>{{p.user.username}}</td>
+			{% if is_granted('ROLE_ADMIN') %}
+				<td>
+					<div align="right">
+						<a href="/app_dev.php/blog/edit/{{p.id}}" class="btn btn-success btn-sm", style="margin-bottom:2px"><i class="glyphicon glyphicon-edit icon-white"></i> Modificar</a>
+						<a href="/app_dev.php/blog/delete/{{p.id}}" class="btn btn-danger btn-sm", style="margin-bottom:2px"><i class="glyphicon glyphicon-trash icon-white"></i> Eliminar</a>
+					</div>
+				</td>			
+			{% endif %}
+		</tr>
+	{% endfor %}
+	</tbody>
+	<tfoot>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+			{% if is_granted('ROLE_ADMIN') %}
+				<th></th>
+			{% endif %}
+		</tr>
+	</tfoot>	
+</table>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function($){
+	    	$('#table_id').dataTable( {
+    	    	"bPaginate": true,
+	        	"bLengthChange": true,
+		        "bFilter": true,
+    		    "bSort": true,
+	        	"bInfo": true,
+		        "bAutoWidth": true,
+    		    "bStateSave": true,
+	        	"bJQueryUI": true,
+		        "colReorder": true,
+		        /*"select": true,*/
+		        "responsive": true,
+    		    "sPaginationType": "simple_numbers",
+		        "fnFooterCallback": function ( nRow, aaData, iStart, iEnd, aiDisplay ) {
+		            var iTotalMarket = 0;
+
+		            for ( var i=0 ; i<aaData.length ; i++ )
+		            {
+		                iTotalMarket += aaData[i][3]*1;
+		            }
+		             
+		            var iPageMarket = 0;
+
+		            for ( var i=iStart ; i<iEnd ; i++ )
+		            {
+		                iPageMarket += aaData[ aiDisplay[i] ][3]*1;
+		            }
+
+            		var nCells = nRow.getElementsByTagName('th');
+            		//nCells[3].innerHTML = parseFloat(iPageMarket); 		             
+					$('#resultado').text(parseFloat(iPageMarket) + ' de un total de ' + iTotalMarket);
+		        }
+		    } );
+
+			$('.btn-danger').click(function(e){
+		        e.preventDefault();
+		        var location = $(this).attr("href");
+		        alertify.confirm("Procederá a eliminar el registro seleccionado, desea continuar?", function(confirm) {
+		            if (!confirm) {
+		                e.preventDefault();
+		            	noty({"text":"Eliminación cancelada","layout":"topCenter","type":"error","animateOpen": {"opacity": "show"}});
+		            }else{
+		            	noty({"text":"Eliminación correctamente efectuada","layout":"topCenter","type":"success","animateOpen": {"opacity": "show"}});
+		            	window.location = location;
+		            }
+		        });
+			});
+
+			$('#config').click(function(e) {
+			  e.preventDefault();
+			  $('#myModal').modal('show');
+			});			
+        });
+    </script>
+{% endblock %}

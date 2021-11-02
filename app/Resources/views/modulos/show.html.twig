@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Modulo</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ modulo.id }}</td>
+            </tr>
+            <tr>
+                <th>Titulo</th>
+                <td>{{ modulo.titulo }}</td>
+            </tr>
+            <tr>
+                <th>Fechainicio</th>
+                <td>{{ modulo.fechaInicio }}</td>
+            </tr>
+            <tr>
+                <th>Fechafin</th>
+                <td>{{ modulo.fechaFin }}</td>
+            </tr>
+            <tr>
+                <th>Horastotal</th>
+                <td>{{ modulo.horasTotal }}</td>
+            </tr>
+            <tr>
+                <th>Horaslectivas</th>
+                <td>{{ modulo.horasLectivas }}</td>
+            </tr>
+            <tr>
+                <th>Profesor</th>
+                <td>{{ modulo.profesor }}</td>
+            </tr>
+            <tr>
+                <th>Correo</th>
+                <td>{{ modulo.correo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('modulos_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('modulos_edit', { 'id': modulo.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
